@@ -1,0 +1,12 @@
+#{extends 'main.html' /}
+
+<div id="folders">
+<ul>
+#{list items:user.folders, as:'folder'}
+	<li>${folder.name}</li>
+#{/list}
+</ul>
+#{form @Folders.create()}
+
+#{/form}
+</div>
