@@ -11,7 +11,7 @@ public class Abbreviate extends JavaExtensions {
 		if (str.length() <= maxWidth) {
 			return str;
 		} else {
-			return str.substring(0, maxWidth) + "...";
+			return str.substring(0, maxWidth) + " ...";
 		}
 	}
 
