@@ -1,0 +1,11 @@
+<h1>ReCards</h1>
+
+<p>
+Online record cards learning and management tool.
+customizable reschedule mechanism
+</p>
+
+<p>
+<b>see it in action:</b>
+http://recards.mzumazumx.de
+</b>
