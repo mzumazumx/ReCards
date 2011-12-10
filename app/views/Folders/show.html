@@ -1,0 +1,32 @@
+#{extends 'main.html' /}
+#{set title:'Folder '+folder.name /}
+<h3><a href="@{Cards.index()}">Home</a> > ${folder.name}</h3>
+
+<div class="fleft round">
+<h3>Create a new card</h3>
+#{form @Cards.create(folder.id)}
+<label for="front">Front</label><br><textarea name="front" rows=5 cols=30></textarea><br>
+<label for="back">Back</label><br><textarea name="back" rows=5 cols=30></textarea><br>
+<input type="submit" value="create">
+#{/form}
+</div>
+
+<div class="cards clearfix">
+	<h2>Review</h2>
+	#{if (due>0)}
+		There are currently ${due} cards over due.<br>
+		<a href="@{Folders.review(folder.id)}" class="fat">Start reviewing</a>
+	#{/if}#{else}
+		There are no cards to review at the moment.
+	#{/else}
+</div>
+
+<div class="cards clearfix">
+	<h2>All cards</h2>
+#{list items:folder.cards, as:'card'}
+#{card card /}
+#{/list}
+#{else}
+You don't have any cards yet. Go ahead create a new one!
+#{/else}
+</div>

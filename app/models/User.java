@@ -33,15 +33,19 @@ public class User extends Model {
 	}
 
 	public static User getCurrent() {
-		if (SecureSocial.getCurrentUser() == null)
-			return null;
-		SocialUser su = SecureSocial.getCurrentUser();
-		User found = User.find("bySocialUserId", su.id).first();
-		if (found == null) {
+		User found = User.findById(1L);
+		if (found == null)
 			found = new User().save();
-			found.socialUserId = su.id;
-		}
 		return found;
+		// if (SecureSocial.getCurrentUser() == null)
+		// return null;
+		// SocialUser su = SecureSocial.getCurrentUser();
+		// User found = User.find("bySocialUserId", su.id).first();
+		// if (found == null) {
+		// found = new User().save();
+		// found.socialUserId = su.id;
+		// }
+		// return found;
 	}
 
 	public SocialUser getSocialUser() {

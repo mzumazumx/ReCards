@@ -1,12 +1,26 @@
 #{extends 'main.html' /}
+#{set title:'Home' /}
+<div class="fleft round">
+	<h3>Create a new folder</h3>
+	#{form @Folders.create()}
+	<label for="name">Name</label>
+	<input type="text" name="name">
+	<br>
+	<input type="submit" value="create">
+	#{/form}
+</div>
 
-<div id="folders">
-<ul>
-#{list items:user.folders, as:'folder'}
-	<li>${folder.name}</li>
-#{/list}
-</ul>
-#{form @Folders.create()}
+<div class="clearfix">
+	<h2>Your statistics</h2>
 
-#{/form}
+
+	<h2>Your folders</h2>
+	<ul>
+	#{list items:user.folders, as:'folder'}
+		<li><a href="@{Folders.show(folder.id)}">${folder.name} (${models.Card.dueCount(folder)})</a></li>
+	#{/list}
+	#{else}
+		You don't have any folders yet. Go ahead create a new one!
+	#{/else}
+	</ul>
 </div>

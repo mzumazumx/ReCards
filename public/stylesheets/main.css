@@ -1,3 +1,24 @@
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+
 * {
 	margin: 0;
 }
@@ -8,6 +29,33 @@
 
 h1 {
 	font-size: 3em;
+}
+
+textarea {
+	border: 1px solid #ccc;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	padding: 5px;
+}
+
+textarea.edit {
+	font-size: 12pt;
+	width: 400px;
+	height: 100px;
+}
+
+.success {
+	background: #67AD10;
+	color: #fff;
+	font-size: 1em;
+	padding: 5px 15px;
+	line-height: 2em;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-box-shadow: 0 2px 0 #4E840B;
+	width: 300px;
+	text-shadow: none;
+	margin: 0 auto;
 }
 
 a.fat {
@@ -51,10 +99,6 @@ div.round {
 	padding: 10px;
 }
 
-div#head {
-	background-color: grey;
-}
-
 div#footer {
 	width: 100%;
 	border-top: 1px solid #ccc;
@@ -92,3 +136,52 @@ div#logos .logo img.default{
 div#logos .logo:hover img.default{
 	opacity:0;
 }
+
+div.fleft {
+	float: right;
+	width: 250px;
+	background-color: #f9f9f9;
+	padding: 15px;
+	border: 1px solid #ccc;
+}
+
+div.cards {
+	margin: 10px;
+	width: 450px;
+}
+
+a.card {
+	padding: 7px;
+	margin: 4px;
+	font-size: 1.2em;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	background-color: #ff6c00;
+	display: block;
+	width: 100%;
+	text-decoration: none;
+	color: #333;
+}
+
+p.schedule {
+	text-align: center;
+}
+
+.ratingButton {
+	border: 2px solid #f9f9f9;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	padding: 10px;
+	font-size: 12pt;
+	-webkit-transition: .5s linear;
+}
+
+.ratingButton:hover {
+	border-color: black;
+}
+
+.correct {
+	background-color: #ff6c00;
+}
+
+

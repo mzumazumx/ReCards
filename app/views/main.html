@@ -7,16 +7,23 @@
         <link rel="stylesheet" media="screen" href="@{'/public/stylesheets/main.css'}">
         <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}">
         <script src="@{'/public/javascripts/jquery-1.5.2.min.js'}" type="text/javascript" charset="${_response_encoding}"></script>
+		<script src="@{'/public/javascripts/main.js'}" type="text/javascript" charset="${_response_encoding}"></script>
         <link href='http://fonts.googleapis.com/css?family=Baumans' rel='stylesheet' type='text/css'>
+		<script>
+		var cards_rate = #{jsAction @Cards.rate(':id') /}
+		</script>
     </head>
     <body>
 		<div id="outer">
-			<div class="container">
-				<div id="head" class="round"><img src="@{'/public/images/logo_small.png'}"></div>
+			<div class="container clearfix">
+				<div id="head"><img src="@{'/public/images/logo_small.png'}" height=40></div>
+				#{if (flash.success)}
+				<div class="success">${flash.success}</div>
+				#{/if}
         		#{doLayout /}
 			</div>
 		</div>
-		<div id="footer">
+		<div id="footer" class="clearfix">
 			<div id="logos" class="container">
 				<a href="https://github.com/mzumazumx/ReCards" class="logo">
 					<img class="default" src="@{'/public/images/github.png'}">

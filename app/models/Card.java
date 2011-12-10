@@ -27,6 +27,10 @@ public class Card extends Model {
 	private Card() {
 	}
 
+	public boolean isDue() {
+		return !due.after(new Date());
+	}
+
 	public static Card create(Folder folder, String front, String back) {
 		Card card = new Card();
 		card.folder = folder;
@@ -38,12 +42,24 @@ public class Card extends Model {
 		return card;
 	}
 
-	public static List<Card> due(User user) {
+	public static Card due(User user) {
+		return Card.find("user = ?1 and due < ?2", user, new Date()).first();
+	}
+
+	public static List<Card> dueAll(User user) {
 		return Card.find("user = ?1 and due < ?2", user, new Date()).fetch();
 	}
 
-	public static List<Card> due(Folder folder) {
+	public static Card due(Folder folder) {
+		return Card.find("folder = ?1 and due < ?2", folder, new Date()).first();
+	}
+
+	public static List<Card> dueAll(Folder folder) {
 		return Card.find("folder = ?1 and due < ?2", folder, new Date()).fetch();
+	}
+
+	public static int dueCount(Folder folder) {
+		return (int) Card.count("folder = ?1 and due < ?2", folder, new Date());
 	}
 
 	public void schedule(Rating r) {

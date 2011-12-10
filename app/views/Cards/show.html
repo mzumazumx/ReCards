@@ -1,0 +1,18 @@
+#{extends 'main.html' /}
+#{set title:'Card '+card.id /}
+<h3><a href="@{Cards.index()}">Home</a> > <a href="@{Folders.show(card.folder.id)}">${card.folder.name}</a> > ${card.id}</h3>
+
+<center class="schedule big">
+	#{if (card.isDue())}
+	due<br><br>
+	#{/if}
+	#{form @Cards.save(card.id)}
+	<textarea name="front" class="edit">${card.front}</textarea>
+	<br>
+	<textarea name="back" class="edit">${card.back}</textarea>
+	<br>
+	<input type="submit" value="Save chanes">
+	<input type="button" onClick="rate(this, ${card.id}, 3)" value="Reschedule">
+	#{/form}
+	<br><br>
+</center>

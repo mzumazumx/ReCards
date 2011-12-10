@@ -1,0 +1,24 @@
+#{extends 'main.html' /}
+#{set title:'Reviewing '+folder.name /}
+<h3><a href="@{Cards.index()}">Home</a> > <a href="@{Folders.show(folder.id)}">${folder.name}</a> > Review</h3>
+
+#{if (!card)}
+	<center class="big">
+		Congratulations! You reviewed all due cards.<br>
+		<a href="@{Folders.show(folder.id)}">back to folder</a>
+	</center>
+#{/if}#{else}
+<p class="schedule big">
+	${card.front}
+	<br><br>
+	<input type="button" onClick="showBack(this)" value="Answer">
+</p>
+<p class="schedule big" style="display: none">
+	${card.back}
+	<br><br>
+	<input type="button" class="ratingButton" onClick="rate(this, ${card.id}, 0)" value="Easy">
+	<input type="button" class="ratingButton" onClick="rate(this, ${card.id}, 1)" value="Medium">
+	<input type="button" class="ratingButton" onClick="rate(this, ${card.id}, 2)" value="Hard">
+	<input type="button" class="ratingButton" onClick="rate(this, ${card.id}, 3)" value="Wrong">
+</p>
+#{/else}
