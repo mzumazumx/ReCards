@@ -6,13 +6,15 @@ import models.Rating;
 import models.User;
 import play.mvc.Before;
 import play.mvc.Controller;
+import play.mvc.With;
+import controllers.securesocial.SecureSocial;
 
 public class Cards extends Controller {
 
 	@Before
 	public static void before() {
 		User user = User.getCurrent();
-		renderArgs.put("user", user);
+		renderArgs.put("u", user);
 	}
 
 	public static void index() {
@@ -21,8 +23,8 @@ public class Cards extends Controller {
 
 	public static void create(Long id, String front, String back) {
 		Folder folder = Folder.findById(id);
-		Card card = Card.create(folder, front, back);
-		show(card.id);
+		Card.create(folder, front, back);
+		Folders.show(folder.id);
 	}
 
 	public static void show(Long id) {

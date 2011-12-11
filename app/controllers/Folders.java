@@ -1,17 +1,21 @@
 package controllers;
 
+import java.util.Date;
+
 import models.Card;
 import models.Folder;
 import models.User;
 import play.mvc.Before;
 import play.mvc.Controller;
+import play.mvc.With;
+import controllers.securesocial.SecureSocial;
 
 public class Folders extends Controller {
 	
 	@Before
 	public static void before() {
 		User user = User.getCurrent();
-		renderArgs.put("user", user);
+		renderArgs.put("u", user);
 	}
 	
 	public static void create(String name) {
@@ -31,4 +35,12 @@ public class Folders extends Controller {
 		render(card, folder);
 	}
 	
+	public static void reschedule(Long id) {
+		Folder folder =  Folder.findById(id);
+		for (Card card : folder.cards) {
+			card.due = new Date();
+			card.save();
+		}
+		show(folder.id);
+	}
 }
