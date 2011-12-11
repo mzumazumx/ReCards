@@ -27,7 +27,7 @@ public class Card extends Model {
 	private Card() {
 	}
 
-	public boolean isDue() {
+	public boolean due() {
 		return !due.after(new Date());
 	}
 
@@ -73,7 +73,7 @@ public class Card extends Model {
 		} else if (r.equals(Rating.HARD)) {
 			addition = user.rating_hard;
 		}
-		cal.add(Calendar.MINUTE, (int) Math.round(60 * addition));
+		cal.add(Calendar.MINUTE, (int) Math.round(61 * addition));
 		this.due = cal.getTime();
 		this.save();
 	}
