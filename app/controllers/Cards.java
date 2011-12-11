@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.securesocial.SecureSocial;
 import models.Card;
 import models.Folder;
 import models.Rating;
@@ -7,8 +8,8 @@ import models.User;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
-import controllers.securesocial.SecureSocial;
 
+@With(SecureSocial.class)
 public class Cards extends Controller {
 
 	@Before
@@ -34,18 +35,23 @@ public class Cards extends Controller {
 
 	public static void rate(Long id, int difficulty) {
 		Card card = Card.findById(id);
+		User user = User.getCurrent();
 		switch (difficulty) {
 		case 0:
 			card.schedule(Rating.EASY);
+			user.stats_easy();
 			break;
 		case 1:
 			card.schedule(Rating.MEDIUM);
+			user.stats_medium();
 			break;
 		case 2:
 			card.schedule(Rating.HARD);
+			user.stats_hard();
 			break;
 		default:
 			card.schedule(Rating.WRONG);
+			user.stats_wrong();
 			break;
 		}
 	}

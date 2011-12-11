@@ -10,6 +10,7 @@ import play.mvc.Controller;
 import play.mvc.With;
 import controllers.securesocial.SecureSocial;
 
+@With(SecureSocial.class)
 public class Folders extends Controller {
 	
 	@Before
