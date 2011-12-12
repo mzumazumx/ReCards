@@ -14,14 +14,10 @@ public class Folder extends Model{
 	
 	public String name;
 	
-	@OneToMany(mappedBy="folder")
-	public List<Card> cards;
-	
 	@ManyToOne
 	public User user;
 	
 	private Folder() {
-		this.cards = new ArrayList<Card>();
 	}
 	
 	public static Folder create(User user, String name) {
@@ -32,6 +28,10 @@ public class Folder extends Model{
 		user.folders.add(folder);
 		user.save();
 		return folder;
+	}
+	
+	public List<Card> getCards() {
+		return Card.find("folder = ? order by due asc", this).fetch();
 	}
 
 }

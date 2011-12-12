@@ -8,10 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import play.db.jpa.Model;
-import securesocial.provider.SocialUser;
-import securesocial.provider.UserId;
-import securesocial.provider.UserService;
-import controllers.securesocial.SecureSocial;
 
 @Entity
 public class User extends Model {
@@ -26,15 +22,25 @@ public class User extends Model {
 	@OneToMany(mappedBy = "user")
 	public List<StatisticsDay> last30days;
 
-	private UserId socialUserId;
+	public String email;
+	public String username;
+	public String password;
+	
+	// email-confirmation code
+	public String code;
+	public String resetToken;
 
-	private User() {
+	private User(String username, String email, String password) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.code = Long.toHexString(Double.doubleToLongBits(Math.random()));
 		folders = new ArrayList<Folder>();
 		last30days = new ArrayList<StatisticsDay>();
 	}
 
-	public static User createUser() {
-		User user = new User();
+	public static User createUser(String username, String email, String password) {
+		User user = new User(username, email, password);
 		user.save();
 		for (int i = 0; i < 30; i++) {
 			StatisticsDay day = new StatisticsDay();
@@ -45,23 +51,6 @@ public class User extends Model {
 		}
 		user.save();
 		return user;
-	}
-
-	public static User getCurrent() {
-		if (SecureSocial.getCurrentUser() == null)
-			return null;
-		SocialUser su = SecureSocial.getCurrentUser();
-		User found = User.find("bySocialUserId", su.id).first();
-		if (found == null) {
-			found = createUser();
-			found.socialUserId = su.id;
-			found.save();
-		}
-		return found;
-	}
-
-	public SocialUser getSocialUser() {
-		return UserService.find(socialUserId);
 	}
 
 	public void stats_easy() {
@@ -116,5 +105,10 @@ public class User extends Model {
 		} catch (NullPointerException e) { // thrown when no values are in
 			return 1;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return this.username;
 	}
 }

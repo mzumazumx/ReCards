@@ -1,8 +1,66 @@
 #{extends 'main.html' /}
 #{set title:'Welcome' /}
+<div class="fleft">
+#{ifErrors}
+	<ul class="error">
+	#{errors}
+		#{if error.key == 'login'}
+		<li>${error}</li>
+		#{/if}
+	#{/errors}
+	</ul>
+#{/ifErrors}
+	<div class="round">
+		<h2>Sign in</h2>
+		#{form @Auth.login(), class: 'aligned'}
+		<label for="emailOrUsername">Email or Username</label><input type="text" name="emailOrUsername"><br>
+		<label for="password">Password</label><input type="password" name="password"><br>
+		<div class="clearfix" style="width: 100%">
+			<input type="submit" value="Sign in" style="float: left"><a href="#" onClick="$('#forgotpw').fadeIn(); return false;" style="float: right; margin: 15px 10px 0 0; font-size: 0.8em">forgot password</a>
+			#{/form}
+			<div id="forgotpw" class="clearfix" #{if (!flash.contains("showForgot"))}style="display: none"#{/if}>
+				<h2>Forgot password</h2>
+				#{ifErrors}
+					<ul class="error">
+					#{errors}
+						#{if error.key == 'forgot'}
+						<li>${error}</li>
+						#{/if}
+					#{/errors}
+					</ul>
+				#{/ifErrors}
+				#{form @Auth.forgot()}
+				<input type="hidden" name="randomID" value="${randomID}" />
+				<label for="email">Email</label><input type="text" name="email" value="${flash.email}"><br>
+				<img src="@{Main.captcha(randomID)}" style="float: right" /><br>
+				<label for="code">Captcha</label><input type="text" name="code" id="code" value="" /><br>
+				<input type="submit" value="Reset password">
+				#{/form}
+			</div>
+		</div>
+	</div>
+	#{ifErrors}
+		<ul class="error">
+		#{errors}
+			#{if error.key == 'signup'}
+			<li>${error}</li>
+			#{/if}
+		#{/errors}
+		</ul>
+	#{/ifErrors}
+	<div class="round">
+		<h2>Sign up</h2>
+		#{form @Auth.signup(), class: 'aligned'}
+		<label for="username">Username</label><input type="text" name="username" autocomplete="off" value="${flash.username}"><br>
+		<label for="email">Email</label><input type="text" name="email" autocomplete="off" value="${flash.email}"><br>
+		<label for="pw1">Password</label><input type="password" name="pw1"><br>
+		<label for="pw2">Repeat Password</label><input type="password" name="pw2"><br>
+		<input type="submit" value="Sign up" id="signup_button">
+		#{/form}
+	</div>
+</div>
 
-<h1>Welcome#{if (user != null)}, ${user.getSocialUser().displayName}#{/if}</h1>
+<h1>Welcome#{if (user != null)}, ${user.username}#{/if}</h1>
 <p class="big">
 	reCards	is a record card tool that helps you get stuff into your brain. simply create a new folder for a topic you want to create cards for. fill that folder with cards (front and back) and have reCards schedule and repeat them for you aligned to your learn behaviour.
 </p>
-<center><a class="fat" href="@{Cards.index()}">Try it out!</a></center>

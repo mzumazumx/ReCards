@@ -15,10 +15,13 @@
     </head>
     <body>
 		<div id="outer">
-			<div class="container clearfix">
+			<div class="container">
 				<div id="head"><img src="@{'/public/images/logo_small.png'}" height=40></div>
 				#{if (flash.success)}
 				<div class="success">${flash.success}</div>
+				#{/if}
+				#{if (flash.error)}
+				<div class="error">${flash.error}</div>
 				#{/if}
         		#{doLayout /}
 			</div>

@@ -1,0 +1,20 @@
+#{extends 'main.html' /}
+<h1><u>Almost</u> done!</h1>
+<br>
+<p>
+<h3>Please confirm this email address belongs to you,</h3>
+by entering the code in your email into the following field or clicking the link in that email. Thank you!</p>
+#{ifErrors}
+	<ul class="error">
+	#{errors}
+		<li>${error}</li>
+	#{/errors}
+	</ul>
+#{/ifErrors}
+</p>
+<br>
+<p>
+#{form @Auth.confirm(user.id)}
+Confirmation-Code <input type="text" name="code" value="${flash.code}"> <input type="submit" value="confirm">
+#{/form}
+</p>

@@ -1,1 +1,1 @@
-<a class="card" href="@{Cards.show(_arg.id)}">${_arg.front.abbreviate(50).escape()}</a>
+<a class="card" href="@{Cards.show(_arg.id)}">${_arg.front.abbreviate(50).escape()} <span class="until">${_arg.due.until()}</span></a>

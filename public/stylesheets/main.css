@@ -1,3 +1,8 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
 .clearfix:after {
 	content: ".";
 	display: block;
@@ -19,10 +24,6 @@ html[xmlns] .clearfix {
 	height: 1%;
 }
 
-* {
-	margin: 0;
-}
-
 .big {
 	font-size: 1.5em;
 }
@@ -31,19 +32,63 @@ h1 {
 	font-size: 3em;
 }
 
-.aligned label, .aligned input, .aligned select {
-  display: block;
-  float: left;
-  width: 5em;
+a, a:visited, a:active {
+	color: #ff6c00
+}
+
+.aligned label {
+	display: block;
+	float: left;
+	width: 70px;
+	padding: 3px;
+	margin: 2px;
+}
+
+.aligned input, .aligned select {
+	display: block;
+	float: left;
+	width: 120px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	border: 1px solid #c3c3c3;
+	padding: 5px;
+	margin: 2px;
+}
+
+.aligned input[type=button], .aligned input[type=submit] {
+	margin: 5px;
+}
+
+.alignedSmall label {
+	display: block;
+	float: left;
+	width: 70px;
+	padding: 3px;
+	margin: 2px;
+}
+
+.alignedSmall input, .alignedSmall select {
+	display: block;
+	float: left;
+	width: 70px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	border: 1px solid #c3c3c3;
+	padding: 5px;
+	margin: 2px;
+}
+
+.alignedSmall input[type=button], .alignedSmall input[type=submit] {
+	margin: 5px;
 }
 
 form br {
-  clear: left;
+	clear: left;
 }
 
 input[type=submit] {
-  float: none;
-  width: auto;
+	float: none;
+	width: auto;
 }
 
 textarea {
@@ -74,13 +119,29 @@ textarea.edit {
 	display: inline;
 }
 
-.error {
+div.error {
 	background: #c00;
 	color: #fff;
 	font-size: 1em;
 	padding: 5px 5px;
 	margin: 15px;
-	width: 300px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-webkit-box-shadow: 0 2px 0 #800;
+	text-shadow: none;
+	display: inline-block;
+}
+
+ul.error {
+	list-style: none;
+}
+
+ul.error li {
+	background: #c00;
+	color: #fff;
+	font-size: 1em;
+	padding: 5px 5px;
+	margin: 5px;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 	-webkit-box-shadow: 0 2px 0 #800;

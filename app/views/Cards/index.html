@@ -1,26 +1,113 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
-<div class="fleft round">
-	<h3>Create a new folder</h3>
-	#{form @Folders.create()}
-	<label for="name">Name</label>
-	<input type="text" name="name">
-	<br>
-	<input type="submit" value="create">
-	#{/form}
+<script type="text/javascript" src="@{'/public/javascripts/protovis-r3.2.js'}"></script>
+
+<div class="fleft">
+	<div style="margin-bottom: 20px">
+		<h2>Your folders</h2>
+		<ul style="padding-left: 25px; padding-top: 5px">
+		#{list items:u.folders, as:'folder'}
+			<li><a href="@{Folders.show(folder.id)}">${folder.name} (${models.Card.dueCount(folder)})</a></li>
+		#{/list}
+		#{else}
+			You don't have any folders yet. Go ahead create a new one!
+		#{/else}
+		</ul>
+	</div>
+	
+	<div class="round">
+		<h3>Create a new folder</h3>
+		#{form @Folders.create(), class:'aligned'}
+		<label for="name">Name</label>
+		<input type="text" name="name">
+		<br>
+		<input type="submit" value="create">
+		#{/form}
+	</div>
+	
+	<div class="round">
+		<h3>Settings</h3>
+		You can change the way reCards schedules your cards by changing the number of hours to reschedule for each difficulty.
+		#{form @Account.saveDifficulties(), class:'alignedSmall'}
+		#{ifErrors}
+			<ul style="list-style: none">
+			#{errors}
+				<li class="error">${error}</li>
+			#{/errors}
+			</ul>
+		#{/ifErrors}
+		<label for="easy">Easy</label><input type="text" name="easy" value="${u.rating_easy}"> hours<br>
+		<label for="medium">Medium</label><input type="text" name="medium" value="${u.rating_medium}">hours <br>
+		<label for="hard">Hard</label><input type="text" name="hard" value="${u.rating_hard}"> hours<br>
+		<input type="submit" value="save">
+		#{/form}
+	</div>
 </div>
 
-<div class="clearfix">
-	<h2>Your statistics</h2>
+<div>
+	<h2>Statistics</h2>
+	<div id="fig">
+	<script type="text/javascript+protovis">
+	var values = [#{list items:u.getStats(), as:'s'}['${s.get("easy")}', '${s.get("medium")}', '${s.get("hard")}', '${s.get("wrong")}']#{if !s_isLast},#{/if}#{/list}];
+	
+	var data = pv.range(4).map(function(i) {
+		return pv.range(0, 30, 1).map(function(x) {
+			return {x: x, y: values[x][i]};
+		});
+	});
+	
+	/* Sizing and scales. */
+	var w = 450,
+	    h = 200,
+	    x = pv.Scale.linear(30, 0).range(0, w),
+	    y = pv.Scale.linear(0, ${u.stats_getMaxY()}).range(0, h),
+		c = pv.colors("green", "yellow", "orange", "red").by(Math.random);
 
+	/* The root panel. */
+	var vis = new pv.Panel()
+	    .width(w)
+	    .height(h)
+	    .bottom(50)
+	    .left(20)
+	    .right(10)
+	    .top(5);
 
-	<h2>Your folders</h2>
-	<ul>
-	#{list items:user.folders, as:'folder'}
-		<li><a href="@{Folders.show(folder.id)}">${folder.name} (${models.Card.dueCount(folder)})</a></li>
-	#{/list}
-	#{else}
-		You don't have any folders yet. Go ahead create a new one!
-	#{/else}
-	</ul>
+	/* X-axis and ticks. */
+	vis.add(pv.Rule)
+	    .data(x.ticks())
+	    .visible(function(d) d)
+	    .left(x)
+	    .bottom(-5)
+	    .height(5)
+	  .anchor("bottom").add(pv.Label)
+	    .text(x.tickFormat);
+
+	/* The stack layout. */
+	vis.add(pv.Layout.Stack)
+	    .layers(data)
+	    .x(function(d) x(d.x))
+	    .y(function(d) y(d.y))
+		.layer.add(pv.Area)
+	    .fillStyle(c);
+	
+	/* The legend. */
+	  vis.add(pv.Dot)
+	      .data(["Easy", "Medium", "Hard", "Wrong"])
+	      .bottom(-30)
+	      .left(function() 25 + this.index * 120)
+	      .strokeStyle(null)
+	      .fillStyle(c)
+	      .size(100)
+	    .anchor("right").add(pv.Label).font("12pt Helvetica");
+
+	/* Y-axis and ticks. */
+	vis.add(pv.Rule)
+	    .data(y.ticks(3))
+	    .bottom(y)
+	    .strokeStyle(function(d) d ? "rgba(128,128,128,.2)" : "#000")
+	  .anchor("left").add(pv.Label)
+	    .text(y.tickFormat);
+
+		vis.render();
+	</script>
 </div>
