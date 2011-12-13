@@ -105,7 +105,7 @@ public class Auth extends Controller {
 	}
 
 	public static void forgot(String email, String code, String randomID) {
-		validation.equals(code, Cache.get(randomID)).key("forgot").message("wrong confirm code");
+		validation.equals(code, Cache.get(randomID)).key("forgot").message("wrong captcha");
 		validation.isTrue("forgot", email != null && !"".equals(email)).message("please enter your email address");
 		validation.isTrue("forgot", code != null && !"".equals(code)).message("please enter the captcha code");
 		validation.email("forgot", email).message("is that email correct?");
