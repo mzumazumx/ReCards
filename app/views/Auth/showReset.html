@@ -1,34 +1,22 @@
 #{extends 'main.html' /}
-<h4>Account &#x9B; Passwort zurücksetzen</h4>
-<h3>Wähle ein neues Passwort</h3>
-<div class="left">
+<h1>Reset password</h1>
+<h3>Please choose a new password</h3>
+<div class="fleft round">
+	Minimum length for your password is 5.
+</div>
+<div style="width: 400px">
 #{ifErrors}
-	<ul style="list-style: none; width: 85%">
+	<ul class="error">
 	#{errors}
-		<li class="error" style="display: block">${error}</li>
+		<li>${error}</li>
 	#{/errors}
 	</ul>
 #{/ifErrors}
-<div class="bglight round">
-#{form @reset()}
+#{form @Auth.reset(), class: 'aligned'}
 <input type="hidden" name="id" value="${userReset.id}">
 <input type="hidden" name="token" value="${token}">
-<table border=0 cellpadding=5 cellspacing=0>
-	<tr>
-		<td>Passwort</td>
-		<td><input type="password" name="pw1" style="width: 99%"></td>
-	</tr>
-	<tr>
-		<td>Passwort wiederholen</td>
-		<td><input type="password" name="pw2" style="width: 99%"></td>
-	</tr>
-	<tr>
-		<td colspan=2><input type="submit" value="Neues Passwort speichern" style="width: 100%"></td>
-	</tr>
-</table>
+<label for="pw1">Password</label><input type="password" name="pw1"><br>
+<label for="pw2">Repeat password</label><input type="password" name="pw2"><br>
+<input type="submit" value="save new password">
 #{/form}
-</div>
-</div>
-<div class="right" style="width: 36%; text-align: justify; padding-top: 20px">
-	Dein neues Passwort sollte min. 5 Zeichen lang sein.
 </div>
