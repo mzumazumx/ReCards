@@ -10,10 +10,10 @@ import play.jobs.On;
 public class NightlyCron extends Job {
 	
 	public void doJob() {
-        List<User> allUsers = User.findAll();
-        for (User user : allUsers) {
+        	List<User> allUsers = User.findAll();
+        	for (User user : allUsers) {
 			user.stats_nextDay();
 		}
-    }
+	}
 
 }

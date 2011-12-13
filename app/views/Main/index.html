@@ -1,5 +1,19 @@
 #{extends 'main.html' /}
 #{set title:'Welcome' /}
+<script type="text/javascript" src="@{'/public/javascripts/jquery.lightbox-0.5.min.js'}"></script>
+<link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/jquery.lightbox-0.5.css'}" media="screen" />
+<script type="text/javascript">
+$(function() {
+	$('#lightbox a').lightBox({
+		imageLoading: '@{'/public/images/lightbox/loading.gif'}',
+		imageBtnClose: '@{'/public/images/lightbox/close.gif'}',
+		imageBtnPrev: '@{'/public/images/lightbox/prev.gif'}',
+		imageBtnNext: '@{'/public/images/lightbox/next.gif'}',
+		imageBlank: '@{'/public/images/lightbox/blank.gif'}',
+	});
+});
+</script>
+
 <div class="fleft">
 #{ifErrors}
 	<ul class="error">
@@ -62,5 +76,6 @@
 
 <h1>Welcome#{if (user != null)}, ${user.username}#{/if}</h1>
 <p class="big">
-	reCards	is a record card tool that helps you get stuff into your brain. simply create a new folder for a topic you want to create cards for. fill that folder with cards (front and back) and have reCards schedule and repeat them for you aligned to your learn behaviour.
+	reCards	is a record card tool that helps you get stuff into your brain. simply create a new folder for a topic you want to create cards for. fill that folder with cards (front and back) and have reCards schedule and repeat them for you aligned to your learn behaviour.<br>
+	<center id="lightbox"><a href="@{'/public/images/p1.jpg'}"><img src="@{'/public/images/thumb.jpg'}" /></a><a href="@{'/public/images/p2.jpg'}"></a><a href="@{'/public/images/p3.jpg'}"></a><a href="@{'/public/images/p4.jpg'}"></a></center>
 </p>

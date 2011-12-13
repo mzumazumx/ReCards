@@ -27,5 +27,5 @@ public class Account extends Controller {
 		flash.success("Settings successfully saved.");
 		Cards.index();
 	}
-
+	
 }

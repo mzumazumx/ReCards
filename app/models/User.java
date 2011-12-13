@@ -34,7 +34,7 @@ public class User extends Model {
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		this.code = Long.toHexString(Double.doubleToLongBits(Math.random()));
+		//this.code = Long.toHexString(Double.doubleToLongBits(Math.random()));
 		folders = new ArrayList<Folder>();
 		last30days = new ArrayList<StatisticsDay>();
 	}
@@ -78,7 +78,7 @@ public class User extends Model {
 	}
 
 	public void stats_nextDay() {
-		StatisticsDay oldDay = StatisticsDay.find("byDayAndUser", 29, this).first();
+		StatisticsDay oldDay = StatisticsDay.find("select sd from StatisticsDay sd where sd.user = ?1 order by sd.day desc", this).first();
 		last30days.remove(oldDay);
 		oldDay.delete();
 		for (StatisticsDay day : last30days) {
@@ -88,6 +88,7 @@ public class User extends Model {
 		StatisticsDay newDay = new StatisticsDay();
 		newDay.user = this;
 		newDay.save();
+		last30days.add(newDay);
 		this.save();
 	}
 
