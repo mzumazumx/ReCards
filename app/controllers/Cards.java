@@ -20,6 +20,12 @@ public class Cards extends Controller {
 	public static void index() {
 		render();
 	}
+	
+	public static void delete(Long id) {
+		Card card = Card.findById(id);
+		card.delete();
+		Folders.show(card.folder.id);
+	}
 
 	public static void create(Long id, String front, String back) {
 		Folder folder = Folder.findById(id);
