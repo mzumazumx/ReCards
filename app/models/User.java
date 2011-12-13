@@ -34,7 +34,7 @@ public class User extends Model {
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		//this.code = Long.toHexString(Double.doubleToLongBits(Math.random()));
+		this.code = Long.toHexString(Double.doubleToLongBits(Math.random()));
 		folders = new ArrayList<Folder>();
 		last30days = new ArrayList<StatisticsDay>();
 	}
