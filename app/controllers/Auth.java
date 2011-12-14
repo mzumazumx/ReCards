@@ -1,7 +1,9 @@
 package controllers;
 
+import org.apache.commons.mail.EmailException;
+
+import notifiers.MailGunHTTPMailer;
 import models.User;
-import notifiers.Mailing;
 import play.cache.Cache;
 import play.data.validation.Email;
 import play.data.validation.Required;
@@ -14,13 +16,15 @@ public class Auth extends Controller {
 
 	@Before(unless = { "login", "signup", "showConfirm", "logout", "confirm", "forgot", "showReset", "reset" })
 	public static void checkaccess() {
-		if (session.get("user") == null)
+		if (session.get("user") == null) {
+			flash.error("Access denied.");
 			Main.index();
-		else {
+		} else {
 			User user = getUser();
-			if (user == null)
+			if (user == null || user.code != null) {
+				flash.error("Access denied.");
 				Main.index();
-			else
+			} else
 				renderArgs.put("user", user);
 		}
 	}
@@ -74,7 +78,12 @@ public class Auth extends Controller {
 		}
 		user = User.createUser(username, email, Crypto.sign(pw1));
 
-		Mailing.sendConfirm(user);
+		try {
+			MailGunHTTPMailer.sendConfirm(user);
+		} catch (EmailException e) {
+			flash.error("Sorry, our Mailserver just failed.");
+			Main.index();
+		}
 
 		showConfirm(user.id);
 	}
@@ -123,7 +132,12 @@ public class Auth extends Controller {
 		user.resetToken = Long.toHexString(Double.doubleToLongBits(Math.random()));
 		user.save();
 
-		Mailing.sendReset(user);
+		try {
+			MailGunHTTPMailer.sendReset(user);
+		} catch (EmailException e) {
+			flash.error("Sorry, our Mailserver just failed.");
+			Main.index();
+		}
 
 		Main.index();
 	}

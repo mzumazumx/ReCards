@@ -1,11 +1,6 @@
 package controllers;
 
-import notifiers.Mailing;
 import models.User;
-import play.data.validation.Email;
-import play.data.validation.Required;
-import play.libs.Crypto;
-import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 
