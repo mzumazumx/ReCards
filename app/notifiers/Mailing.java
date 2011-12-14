@@ -10,7 +10,7 @@ import play.mvc.Router;
 
 public class Mailing extends Mailer {
 
-	public static void sendConfirm(User user) {
+	public static boolean sendConfirm(User user) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", user.id);
 		map.put("code", user.code);
@@ -21,9 +21,10 @@ public class Mailing extends Mailer {
 		addRecipient(user.email);
 		send(user, link);
 		Logger.info("sent registration-email to " + user);
+		return true;
 	}
 
-	public static void sendReset(User user) {
+	public static boolean sendReset(User user) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", user.id);
 		map.put("token", user.resetToken);
@@ -34,6 +35,7 @@ public class Mailing extends Mailer {
 		addRecipient(user.email);
 		send(user, link);
 		Logger.info("sent reset-email to " + user);
+		return true;
 	}
 
 }
