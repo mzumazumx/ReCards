@@ -1,0 +1,11 @@
+.classpath
+.settings
+.project
+conf
+eclipse
+precompiled
+dotcloud.sh
+test-result
+tmp
+upload
+Presentation.key
