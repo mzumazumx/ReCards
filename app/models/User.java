@@ -53,28 +53,8 @@ public class User extends Model {
 		return user;
 	}
 
-	public void stats_easy() {
-		StatisticsDay today = StatisticsDay.find("byDayAndUser", 0, this).first();
-		today.easy++;
-		today.save();
-	}
-
-	public void stats_medium() {
-		StatisticsDay today = StatisticsDay.find("byDayAndUser", 0, this).first();
-		today.medium++;
-		today.save();
-	}
-
-	public void stats_hard() {
-		StatisticsDay today = StatisticsDay.find("byDayAndUser", 0, this).first();
-		today.hard++;
-		today.save();
-	}
-
-	public void stats_wrong() {
-		StatisticsDay today = StatisticsDay.find("byDayAndUser", 0, this).first();
-		today.wrong++;
-		today.save();
+	private StatisticsDay getStatisticsToday() {
+		return StatisticsDay.find("byDayAndUser", 0, this).first();
 	}
 
 	public void stats_nextDay() {
@@ -111,5 +91,18 @@ public class User extends Model {
 	@Override
 	public String toString() {
 		return this.username;
+	}
+
+	public void rateCard(Card card, Rating rating) {
+		card.rateCard(rating);
+		StatisticsDay today = getStatisticsToday();
+		if (rating.equals(Rating.EASY)) {
+			today.easy++;
+		} else if (rating.equals(Rating.MEDIUM)) {
+			today.medium++;
+		} else if (rating.equals(Rating.HARD)) {
+			today.hard++;
+		}
+		today.save();
 	}
 }

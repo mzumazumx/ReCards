@@ -62,7 +62,7 @@ public class Card extends Model {
 		return (int) Card.count("folder = ?1 and due < ?2", folder, new Date());
 	}
 
-	public void schedule(Rating r) {
+	public void rateCard(Rating r) {
 		GregorianCalendar cal = new GregorianCalendar();
 		cal.setTime(new Date());
 		double addition = 0;

@@ -47,20 +47,16 @@ public class Cards extends Controller {
 		}
 		switch (difficulty) {
 		case 0:
-			card.schedule(Rating.EASY);
-			user.stats_easy();
+			user.rateCard(card, Rating.EASY);
 			break;
 		case 1:
-			card.schedule(Rating.MEDIUM);
-			user.stats_medium();
+			user.rateCard(card, Rating.MEDIUM);
 			break;
 		case 2:
-			card.schedule(Rating.HARD);
-			user.stats_hard();
+			user.rateCard(card, Rating.HARD);
 			break;
 		default:
-			card.schedule(Rating.WRONG);
-			user.stats_wrong();
+			user.rateCard(card, Rating.WRONG);
 			break;
 		}
 	}
